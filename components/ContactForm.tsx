@@ -1,7 +1,6 @@
 'use client';
 
-import React from "react";
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -22,29 +21,39 @@ export default function ContactForm() {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+    setSubmitStatus("Sending...");
+
+    const form = new FormData();
+    form.append("access_key", "c9d32536-19bc-4cbb-8c79-0be8a264a57f"); // 🔑 Replace this with your key
+    form.append("name", formData.name);
+    form.append("email", formData.email);
+    form.append("phone", formData.phone);
+    form.append("service", formData.service);
+    form.append("message", formData.message);
+
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams(formData).toString()
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: form
       });
 
-      if (response.ok) {
-        setSubmitStatus('success');
+      const data = await res.json();
+
+      if (data.success) {
+        setSubmitStatus("Form submitted successfully! We'll get back to you soon.");
         setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       } else {
-        setSubmitStatus('error');
+        setSubmitStatus("Oops! Something went wrong.");
+        console.error(data);
       }
-    } catch (error) {
-      setSubmitStatus('error');
+    } catch (err) {
+      setSubmitStatus("Failed to submit the form.");
+      console.error(err);
     }
-    
+
     setIsSubmitting(false);
   };
 
@@ -61,7 +70,7 @@ export default function ContactForm() {
             </p>
           </div>
 
-          <form id="contact-form" onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-8">
+          <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -69,7 +78,6 @@ export default function ContactForm() {
                 </label>
                 <input
                   type="text"
-                  id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
@@ -84,7 +92,6 @@ export default function ContactForm() {
                 </label>
                 <input
                   type="email"
-                  id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
@@ -102,7 +109,6 @@ export default function ContactForm() {
                 </label>
                 <input
                   type="tel"
-                  id="phone"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
@@ -116,7 +122,6 @@ export default function ContactForm() {
                   Service Needed
                 </label>
                 <select
-                  id="service"
                   name="service"
                   value={formData.service}
                   onChange={handleChange}
@@ -139,7 +144,6 @@ export default function ContactForm() {
                 Message
               </label>
               <textarea
-                id="message"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
@@ -156,20 +160,14 @@ export default function ContactForm() {
             <button
               type="submit"
               disabled={isSubmitting || formData.message.length > 500}
-              className="w-full bg-orange-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-orange-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap cursor-pointer"
+              className="w-full bg-orange-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-orange-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
             >
               {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
 
-            {submitStatus === 'success' && (
-              <div className="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                Thank you! Your message has been sent successfully. We'll get back to you soon.
-              </div>
-            )}
-
-            {submitStatus === 'error' && (
-              <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                Sorry, there was an error sending your message. Please try again.
+            {submitStatus && (
+              <div className={`mt-4 p-4 rounded-lg ${submitStatus.includes('successfully') ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700'}`}>
+                {submitStatus}
               </div>
             )}
           </form>

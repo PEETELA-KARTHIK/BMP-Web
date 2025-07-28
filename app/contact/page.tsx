@@ -24,24 +24,31 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setIsSubmitting(true);
-    setSubmitStatus('');
+    setSubmitStatus('Sending...');
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    formData.append('access_key', 'c9d32536-19bc-4cbb-8c79-0be8a264a57f');
+
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString()
+        body: formData
       });
-      if (response.ok) {
+      const data = await response.json();
+      if (data.success) {
         setSubmitStatus('success');
         setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+        form.reset();
       } else {
         setSubmitStatus('error');
+        console.log('Error', data);
       }
     } catch (error) {
       setSubmitStatus('error');
+      console.log('Error', error);
     }
     setIsSubmitting(false);
   };

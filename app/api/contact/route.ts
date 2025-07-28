@@ -27,7 +27,7 @@ export async function POST(request: Request) {
       to: process.env.CONTACT_RECEIVER_EMAIL,
       replyTo: email || '',
       subject: `New Contact Form Submission from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`,
+      text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nService: ${service}\nMessage: ${message}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #e65100;">New Contact Form Submission</h2>
@@ -45,6 +45,10 @@ export async function POST(request: Request) {
               <td style="padding: 8px 0;">${phone}</td>
             </tr>
             <tr>
+              <td style="font-weight: bold; padding: 8px 0;">Service:</td>
+              <td style="padding: 8px 0;">${service}</td>
+            </tr>
+            <tr>
               <td style="font-weight: bold; padding: 8px 0;">Message:</td>
               <td style="padding: 8px 0; white-space: pre-line;">${message}</td>
             </tr>
@@ -54,6 +58,9 @@ export async function POST(request: Request) {
     });
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
+    // Log error for debugging (visible in Vercel logs)
+    console.error('Contact form email error:', error);
+    // Return a generic error for users, but include details for admin/debugging
+    return NextResponse.json({ success: false, error: (error as Error).message, debug: process.env.NODE_ENV !== 'production' ? error : undefined }, { status: 500 });
   }
 } 
