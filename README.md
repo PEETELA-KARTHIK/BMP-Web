@@ -54,3 +54,74 @@ CONTACT_RECEIVER_EMAIL=your@email.com
 3. Deploy your site. The contact form will work both locally and in production as long as the environment variables are set.
 
 Let me know if you want help with a specific SMTP provider or want to test locally!
+
+# Email Contact Form Setup
+
+To enable the contact form to send emails, add the following environment variables to your `.env.local` file in the project root:
+
+```
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_SECURE=true
+SMTP_USER=bmpoffice24x7@gmail.com
+SMTP_PASS=zfuwotzpknxgawts
+SMTP_FROM=bmpoffice24x7@gmail.com
+CONTACT_RECEIVER_EMAIL=bmpoffice24x7@gmail.com
+```
+
+> **Note:** Never commit your `.env.local` file to version control. These credentials are sensitive.
+
+After setting up, restart your development server for the changes to take effect.
+
+---
+
+## **How to Make the Contact Form Work**
+
+### 1. **Add SMTP Credentials**
+
+Create a file named `.env.local` in your project root (same level as `package.json`) and add the following:
+
+```
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_SECURE=true
+SMTP_USER=bmpoffice24x7@gmail.com
+SMTP_PASS=zfuwotzpknxgawts
+SMTP_FROM=bmpoffice24x7@gmail.com
+CONTACT_RECEIVER_EMAIL=bmpoffice24x7@gmail.com
+```
+
+> **Important:** Never commit `.env.local` to git. These credentials are sensitive.
+
+---
+
+### 2. **Restart Your Server**
+
+After saving the `.env.local` file, restart your Next.js development or production server. This ensures the environment variables are loaded.
+
+---
+
+### 3. **How It Works**
+
+- When someone submits the contact form, the frontend sends the data to `/api/contact`.
+- The backend (`app/api/contact/route.ts`) uses Nodemailer to send an email to `CONTACT_RECEIVER_EMAIL` with the form details.
+
+---
+
+### 4. **Testing**
+
+- Fill out the contact form on your site and submit.
+- You should receive an email at `bmpoffice24x7@gmail.com` with the submitted details.
+
+---
+
+### 5. **Troubleshooting**
+
+- If you don’t receive emails, check your spam folder.
+- Make sure less secure app access is enabled for your Gmail account, or use an App Password (which you are already doing).
+- Check your server logs for any errors.
+
+---
+
+**You are all set!**  
+Let me know if you want to customize the email template, add validation, or need help with deployment.
