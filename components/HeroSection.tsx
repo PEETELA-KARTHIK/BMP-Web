@@ -1,5 +1,8 @@
 'use client';
 
+import BlurText from "./BlurText";
+import { motion } from 'framer-motion';
+
 export default function HeroSection() {
   return (
     <section 
@@ -10,10 +13,13 @@ export default function HeroSection() {
     >
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center text-white">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Book Priests for Your
-            <span className="text-orange-400 block">Special Ceremonies</span>
-          </h1>
+          <BlurText
+            text="Book Priests for Your Special Ceremonies"
+            delay={150}
+            animateBy="words"
+            direction="top"
+            className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
+          />
           <p className="text-xl md:text-2xl mb-8 text-gray-200">
             Trusted, verified, and experienced priests for all your sacred rituals
           </p>

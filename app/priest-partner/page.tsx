@@ -29,6 +29,8 @@ export default function PriestPartner() {
     const form = e.target as HTMLFormElement;
     const formDataObj = new FormData(form);
     formDataObj.append("access_key", "c9d32536-19bc-4cbb-8c79-0be8a264a57f");
+    // Set a custom subject for the email
+    formDataObj.append("subject", `Priest Partner Application from ${formData.name} (${formData.city})`);
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
