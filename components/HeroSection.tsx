@@ -5,7 +5,7 @@ export default function HeroSection() {
     <section 
       className="relative bg-cover bg-center py-20 lg:py-32"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://readdy.ai/api/search-image?query=Beautiful%20Hindu%20temple%20ceremony%20with%20golden%20diyas%20oil%20lamps%20glowing%20warm%20light%2C%20priest%20performing%20sacred%20rituals%20with%20flowers%20and%20incense%2C%20peaceful%20spiritual%20atmosphere%2C%20traditional%20elements%2C%20soft%20morning%20light%2C%20serene%20temple%20interior%20with%20ornate%20decorations%2C%20devotional%20setting%20with%20rangoli%20patterns%2C%20warm%20golden%20and%20orange%20tones%20creating%20peaceful%20ambiance&width=1920&height=1080&seq=hero001&orientation=landscape')`
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/HEADIMG.jpg')`
       }}
     >
       <div className="container mx-auto px-4">

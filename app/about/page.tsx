@@ -4,32 +4,7 @@ import React from "react";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-const teamMembers = [
-  {
-    name: 'Anish Grandhe',
-    role: 'Founder & CEO',
-    image: '/images/linkedin.png',
-    description: 'Passionate about connecting traditional Hindu culture with modern technology'
-  },
-  {
-    name: 'Dhiraj Monthri',
-    role: 'Co-Founder',
-    image: '/images/dhiraj.png',
-    description: 'Passionate about connecting traditional Hindu culture with modern technology'
-  },
-  {
-    name: 'Eshwar Grandhe',
-    role: 'CTO',
-    image: '/images/eshwar.jpg',
-    description: 'Tech innovator driving seamless booking experiences through reliable, user-friendly platforms.'
-  },
-  {
-    name: 'Bhavana Kasula',
-    role: 'COO',
-    image: '/images/bhavana.png',
-    description: 'Operations expert ensuring smooth, trusted service delivery for every sacred ceremony.'
-  }
-];
+
 
 const values = [
   {
@@ -106,18 +81,6 @@ export default function About() {
                 is a step towards keeping our rich cultural heritage alive.
               </p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 text-center">
-              <div>
-                
-              </div>
-              <div>
-                
-              </div>
-              <div>
-                
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -151,39 +114,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Meet Our Team
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              The passionate people behind BookMyPujari
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
-              <div key={index} className="text-center">
-                <img 
-                  src={member.image} 
-                  alt={member.name}
-                  className="w-32 h-32 mx-auto rounded-full object-cover object-top mb-4"
-                />
-                <h3 className="text-xl font-semibold text-gray-900 mb-1">
-                  {member.name}
-                </h3>
-                <p className="text-orange-600 font-medium mb-3">
-                  {member.role}
-                </p>
-                <p className="text-gray-600 text-sm">
-                  {member.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       <section className="py-16 bg-orange-50">
         <div className="container mx-auto px-4 text-center">
