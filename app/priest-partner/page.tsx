@@ -26,20 +26,26 @@ export default function PriestPartner() {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus("");
+    const form = e.target as HTMLFormElement;
+    const formDataObj = new FormData(form);
+    formDataObj.append("access_key", "c9d32536-19bc-4cbb-8c79-0be8a264a57f");
     try {
-      const response = await fetch("/api/priest-partner", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formData).toString()
+        body: formDataObj
       });
-      if (response.ok) {
+      const data = await response.json();
+      if (data.success) {
         setSubmitStatus("success");
         setFormData({ name: "", email: "", phone: "", city: "", experience: "", languages: "", message: "" });
+        form.reset();
       } else {
         setSubmitStatus("error");
+        console.log("Error", data);
       }
-    } catch {
+    } catch (error) {
       setSubmitStatus("error");
+      console.log("Error", error);
     }
     setIsSubmitting(false);
   };
